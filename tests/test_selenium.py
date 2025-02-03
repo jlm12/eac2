@@ -51,16 +51,16 @@ class AdminStaffTest(StaticLiveServerTestCase):
             raise
 
     def admin_logout(self):
-        """Cierra sesión en el panel de administración mediante clic explícito en el botón de logout."""
+        """Cierra sesión en el panel de administración mediante el botón 'Log out'."""
         print("Cerrando sesión mediante el botón 'Log out'...")
         wait = WebDriverWait(self.selenium, 15)
         try:
-            # Ubicar el botón o enlace de logout basado en su identificador o estructura del DOM
-            logout_link = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a[href='/admin/logout/']")))
-            logout_link.click()
+            # Ubicar el botón dentro del formulario logout y hacer clic en él
+            logout_button = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "form#logout-form button[type='submit']")))
+            logout_button.click()
             print("Sesión cerrada exitosamente.")
         except TimeoutException:
-            print("No se pudo encontrar el enlace o botón de 'Log out'.")
+            print("No se pudo encontrar el botón de 'Log out'.")
             print(self.selenium.page_source)  # Para depuración
             raise
 
